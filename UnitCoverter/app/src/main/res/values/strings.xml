@@ -1,0 +1,13 @@
+<resources>
+    <string name="app_name">Unit Coverter</string>
+
+    <string-array name="conv_array">
+        <item>F to C</item>
+        <item>lb to kg</item>
+        <item>mi to km</item>
+        <item>oz to ml</item>
+    </string-array>
+
+
+
+</resources>

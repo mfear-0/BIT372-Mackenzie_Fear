@@ -10,10 +10,15 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
+import static androidx.test.espresso.Espresso.onData;
 import static androidx.test.espresso.Espresso.onView;
 import static androidx.test.espresso.action.ViewActions.*;
 import static androidx.test.espresso.assertion.ViewAssertions.matches;
 import static androidx.test.espresso.matcher.ViewMatchers.*;
+import static java.util.EnumSet.allOf;
+import static org.hamcrest.Matchers.containsString;
+import static org.hamcrest.Matchers.instanceOf;
+import static org.hamcrest.Matchers.is;
 import static org.junit.Assert.*;
 
 /**
@@ -28,35 +33,48 @@ public class MainActivityUITest {
             new ActivityScenarioRule<>(MainActivity.class);
     @Test
     public void useAppContext() {
-        // Context of the app under test.
         Context appContext = InstrumentationRegistry.getInstrumentation().getTargetContext();
         assertEquals("com.example.unitcoverter", appContext.getPackageName());
     }
 
     @Test
-    public void can_enter_fahrenheit() {
-        onView(withId(R.id.fahrenheit_input)).perform(typeText("45"));
-        onView(withId(R.id.convert_btn)).perform(click());
-        onView(withId(R.id.celcius_text)).check(matches(withText("7.22 ºC")));
-    }
-
-    @Test
     public void should_not_enter_empty_fah() {
         onView(withId(R.id.convert_btn)).perform(click());
-        onView(withId(R.id.celcius_text)).check(matches(withText("ºC")));
+        onView(withId(R.id.celcius_text)).check(matches(withText("")));
     }
 
     @Test
-    public void can_enter_lbs() {
-        onView(withId(R.id.pounds_input)).perform(typeText("50"));
-        onView(withId(R.id.convert_btn2)).perform(click());
-        onView(withId(R.id.kilo_text)).check(matches(withText("22.68 kg")));
+    public void can_enter_fahrenheit() {
+        onView(withId(R.id.spinner)).perform(click());
+        onView(withText("F to C")).perform(click());
+        onView(withId(R.id.fahrenheit_input)).perform(typeText("45"));
+        onView(withId(R.id.convert_btn)).perform(click());
+        onView(withId(R.id.celcius_text)).check(matches(withText("ºF is equal to 7.22 ºC")));
     }
 
     @Test
-    public void should_not_enter_empty_lbs() {
-        onView(withId(R.id.convert_btn2)).perform(click());
-        onView(withId(R.id.kilo_text)).check(matches(withText("kg")));
+    public void can_enter_pounds() {
+        onView(withId(R.id.spinner)).perform(click());
+        onView(withText("lb to kg")).perform(click());
+        onView(withId(R.id.fahrenheit_input)).perform(typeText("45"));
+        onView(withId(R.id.convert_btn)).perform(click());
+        onView(withId(R.id.celcius_text)).check(matches(withText("lbs is equal to 20.41 kg")));
     }
 
+    @Test
+    public void can_enter_miles() {
+        onView(withId(R.id.spinner)).perform(click());
+        onView(withText("mi to km")).perform(click());
+        onView(withId(R.id.fahrenheit_input)).perform(typeText("45"));
+        onView(withId(R.id.convert_btn)).perform(click());
+        onView(withId(R.id.celcius_text)).check(matches(withText("miles is equal to 72.42 km")));
+    }
+    @Test
+    public void can_enter_ounces() {
+        onView(withId(R.id.spinner)).perform(click());
+        onView(withText("oz to ml")).perform(click());
+        onView(withId(R.id.fahrenheit_input)).perform(typeText("45"));
+        onView(withId(R.id.convert_btn)).perform(click());
+        onView(withId(R.id.celcius_text)).check(matches(withText("ounces is equal to 1330.81 ml")));
+    }
 }
